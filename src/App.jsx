@@ -1,15 +1,17 @@
 import { useRoutes } from 'react-router-dom'
 import './App.css'
+import Home from './components/Home/Home'
 
 function App() {
 
-  const element = useRoutes([])
+  const element = useRoutes([
+    {
+      path:'/',
+      element : <Home/>
+    }
+  ])
 
-  return (
-    <div className="App">
-      
-    </div>
-  )
+  return element
 }
 
 export default App
