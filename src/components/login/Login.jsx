@@ -21,9 +21,9 @@ const Login = () => {
   });
 
   return (
-    <div className="bg-blue-50 dark:bg-gray-900">
+    <div className="bg-blue-200 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center mx-auto md:h-screen lg:py-0 sm:mx-5 sm:h-screen">
-        <h1 className="mb-4 text-4xl tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl sm:text-lg dark:text-white">
+        <h1 className="mb-4 text-xl tracking-tight leading-none text-gray-900 md:text-2xl lg:text-4xl sm:text-lg dark:text-white">
           Chergei Self Help Group
         </h1>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
