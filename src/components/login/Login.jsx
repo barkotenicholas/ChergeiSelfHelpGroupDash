@@ -24,7 +24,7 @@ const Login = () => {
     <div className="bg-blue-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center mx-auto md:h-screen lg:py-0 sm:mx-5 sm:h-screen">
         <h1 className="mb-4 text-4xl tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl sm:text-lg dark:text-white">
-          Chergei Self Help group
+          Chergei Self Help Group
         </h1>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -44,10 +44,11 @@ const Login = () => {
                   name="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
+                  onBlur={formik.handleBlur}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                 />
-                {formik.errors.email ? (
+                {formik.errors.email && formik.touched.email ? (
                   <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
                     {formik.errors.email}
                   </span>
@@ -63,11 +64,12 @@ const Login = () => {
                   autoComplete="off"
                   onChange={formik.handleChange}
                   value={formik.values.password}
+                  onBlur={formik.handleBlur}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 />
-                  {formik.errors.password ? (
+                  {formik.errors.password && formik.touched.password ? (
                   <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
                     {formik.errors.password}
                   </span>
