@@ -1,6 +1,12 @@
 import {useFormik} from 'formik'
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup'
+import { loginUser } from '../../features/user/userActions';
+
 const Login = () => {
+
+
+  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -9,15 +15,15 @@ const Login = () => {
     },
     validationSchema:Yup.object({
         email:Yup.string().email().required("Email is Required"),
-        password: Yup.string()
-        .required('Please Enter your password')
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-        ),
+        // password: Yup.string()
+        // .required('Please Enter your password')
+        // .matches(
+        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        // ),
     }),
     onSubmit:(values)=>{
-
+        dispatch(loginUser(values))
     }
   });
 
