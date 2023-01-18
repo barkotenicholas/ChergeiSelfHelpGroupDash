@@ -9,6 +9,6 @@
     box-sizing: border-box;
   }
   .sidebar-container{
-    @apply bg-glass h-[96%] w-[20rem] rounded-3xl ml-6 p-4 border transition-all duration-500 border-solid border-glass relative
+    @apply bg-glass h-[99%] w-[20rem] rounded-3xl ml-6 p-4 border transition-all duration-500 border-solid border-glass relative
   }
 }
