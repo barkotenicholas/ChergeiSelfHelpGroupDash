@@ -5,7 +5,12 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        glass:"rgba(255,255,255,0.25)",
+        brown:"rgb(30,30,17);"
+      }
+    },
     screens: {
       'sm': '400px',
       // => @media (min-width: 640px) { ... }
