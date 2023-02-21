@@ -11,4 +11,7 @@
   .sidebar-container{
     @apply bg-yellow-500   w-[20rem] p-4 border transition-all duration-500 border-solid border-glass relative flex flex-row justify-end
   }
+  .sidebar{
+    @apply flex items-center mt-2  p-4 rounded-lg cursor-pointer hover:bg-white transition-all duration-300 
+  }
 } 

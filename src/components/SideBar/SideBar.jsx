@@ -8,6 +8,7 @@ const SideBar = () => {
     <div className={`${toggle ? 'w-[5.8rem]' : ''} sidebar-container`}>
       
       <SideBarData toggle={toggle} />
+      
       <div className='flex justify-center items-center -left-5 w-10 h-10 bg-glass rounded-full cursor-pointer' onClick={()=>{
         setToggle(!toggle);
       }}>
