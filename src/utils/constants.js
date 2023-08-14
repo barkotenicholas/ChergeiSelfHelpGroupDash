@@ -1,1 +1,1 @@
-export const BASE_URL = "http://chergeionline.com:8000";
+export const BASE_URL = "http://chergeionline.com:8002";

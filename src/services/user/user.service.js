@@ -9,7 +9,7 @@ export const UserLogin  = (data)=>{
         'Access-Control-Allow-Headers': 'Content-Type'
     };
 
-    return axios.post(`${BASE_URL}/authenticateAdmin`,data, headers
+    return axios.post(`${BASE_URL}/api/v1/auth/login`,data, headers
     ).then((response)=>{
         console.log(response);
     })
