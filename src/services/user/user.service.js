@@ -11,7 +11,11 @@ export const UserLogin  = (data)=>{
 
     return axios.post(`${BASE_URL}/api/v1/auth/login`,data, headers
     ).then((response)=>{
-        console.log(response);
-    })
+        if(response.data.token){
+            localStorage.setItem('user',JSON.stringify(response.data))
+        }
+
+        return response.data
+    });
 
 };

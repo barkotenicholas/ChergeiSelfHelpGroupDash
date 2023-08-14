@@ -7,8 +7,8 @@ export const loginUser = createAsyncThunk(
     try {
 
       const response = await UserLogin(data);
-      
-      return response.data;
+
+      return response;
     } catch (error) {
       console.log(error)
       const message =
