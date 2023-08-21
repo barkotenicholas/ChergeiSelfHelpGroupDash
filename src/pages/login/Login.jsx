@@ -1,6 +1,7 @@
 import {useFormik} from 'formik'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup'
 import { loginUser } from '../../features/user/userActions';
 
@@ -10,7 +11,9 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const [loading,setLoading] = useState(false)
-  
+
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +34,7 @@ const Login = () => {
         .then(()=>{
 
           setLoading(false)
+          navigate('/', { replace: true });
 
         })
         .catch(()=>{
