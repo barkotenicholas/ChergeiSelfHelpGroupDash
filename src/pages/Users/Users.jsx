@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Pagination from "../../components/Pagination/Pagination";
 import { getAllUsers } from "../../features/user/ClientsActions";
 import ReactPaginate from 'react-paginate';
-
+import { SearchBar } from "../../components/searchbar/searchBar";
 const Home = () => {
 
   const dispatch = useDispatch()
@@ -39,6 +39,11 @@ const Home = () => {
 
   return (
   <>
+      <>
+        <SearchBar className="p-16">
+
+        </SearchBar>
+      </>
       <div className="flex flex-col">
         <div className="overflow-x-auto">
           <div className="p-1.5 w-full inline-block align-middle">
@@ -118,7 +123,7 @@ const Home = () => {
         </div>
       </div>  
     
-      <>
+      <div className="" >
         <ReactPaginate
           previousLabel={"← Previous"}
           nextLabel={"Next →"}
@@ -131,7 +136,7 @@ const Home = () => {
           disabledClassName={"pagination__link--disabled"}
           activeClassName={"pagination__link--active"}
         />
-      </>
+      </div>
   </>
     );
 };
