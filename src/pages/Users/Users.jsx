@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import Pagination from "../../components/Pagination/Pagination";
-import { getAllUsers } from "../../features/user/ClientsActions";
+import { getAllUsers ,searchAllUsers } from "../../features/user/ClientsActions";
 import ReactPaginate from 'react-paginate';
 import { SearchBar } from "../../components/searchbar/searchBar";
 const Home = () => {
@@ -12,15 +12,19 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
-    dispatch(getAllUsers(currentPage)).unwrap()
-    .then((payload)=>{
-
-      setUsers(payload.users)
-      setTotalPages(payload.totalPages)
-      setCurrentPage(payload.currentPage)
-
-    });
+    if(search == ""){
+      dispatch(getAllUsers(currentPage)).unwrap()
+      .then((payload)=>{
+  
+        setUsers(payload.users)
+        setTotalPages(payload.totalPages)
+        setCurrentPage(payload.currentPage)
+  
+      });
+    }
   }, [currentPage])
 
   const PER_PAGE = 10;
@@ -30,17 +34,37 @@ const Home = () => {
   console.log(pageCount);
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected+1);
-};
+  };
   function formatDate (date){
     const a = new Date(date)
     return  `${a.getFullYear()}-${a.getUTCMonth() + 1}-${a.getDate()}`
+  }
+
+  useEffect(() => { 
+    if(search == ""){
+
+    }else{
+      dispatch(searchAllUsers({search:search.search,page:currentPage})).unwrap()
+      .then((payload)=>{
+        console.log(payload.users);
+        setUsers(payload.users)
+        setTotalPages(payload.totalPages)
+        setCurrentPage(payload.currentPage)
+  
+      });    
+    }
+
+  }, [search,currentPage])
+  
+  function updateSearch(value){
+    setSearch(value)
   }
 
 
   return (
   <>
       <>
-        <SearchBar className="p-16">
+        <SearchBar className="p-16" updateSearch={updateSearch}  >
 
         </SearchBar>
       </>
