@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetUsers ,searchUsers } from "../../services/user/clients.service";
+import { GetUsers ,searchUsers ,updateSingleUsers } from "../../services/user/clients.service";
 
 
 export const getAllUsers =  createAsyncThunk(
@@ -21,7 +21,6 @@ export const searchAllUsers =  createAsyncThunk(
     async (search,thunkAPI) =>{
         try {
 
-            console.log(search);
 
             const response = await searchUsers(search);
             
@@ -31,4 +30,16 @@ export const searchAllUsers =  createAsyncThunk(
             
         }
     }   
+)
+
+export const updateUsers = createAsyncThunk(
+    "clients/updateUser",
+    async(update,thunkAPI)=>{
+        try {
+            const response =await updateSingleUsers(update)
+            return response.da
+        } catch (error) {
+            
+        }
+    }
 )

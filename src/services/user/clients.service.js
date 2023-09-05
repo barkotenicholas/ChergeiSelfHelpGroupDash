@@ -7,6 +7,9 @@ export const GetUsers=(page)=>{
 }
 
 export const searchUsers=(search)=>{
-    console.log(search);
     return axios.get(`${BASE_URL}/api/v1/clients/search?search=${search.search}&page=${search.page}`)
+}
+
+export const updateSingleUsers=(update)=>{
+    return axios.patch(`${BASE_URL}/api/v1/clients`,update)
 }

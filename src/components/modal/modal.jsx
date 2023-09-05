@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 const Modal = ({setshowModal,currentSelectedUser,children}) => {
 
-    console.log(currentSelectedUser);
     return (
         <>
             <div
