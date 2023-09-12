@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { getAllUsers ,searchAllUsers } from "../../features/user/ClientsActions";
+import { getAllUsers ,searchAllUsers ,updateUsers } from "../../features/user/ClientsActions";
 import ReactPaginate from 'react-paginate';
 import { SearchBar } from "../../components/searchbar/searchBar";
 import Modal from "../../components/modal/modal";
 import EditUserForm from "../../components/modal/EditUser";
+import { LineWave } from "react-loader-spinner";
+import { FaUserPlus } from "react-icons/fa";
+import AddUser from "../../components/modal/AddUser";
+import Swal from "sweetalert2";
 
 
 
@@ -17,8 +21,12 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [search, setSearch] = useState("");
-  const [showModal, setshowModal] = useState(false);
+  const [showModalEdit, setshowModalEdit] = useState(false);
+  const [showModalNew, setshowModalNew] = useState(false)
   const [currentSelectedUser, setcurrentSelectedUser] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [modalContent, setmodalContent] = useState(null)
+
   useEffect(() => {
     if(search == ""){
       dispatch(getAllUsers(currentPage)).unwrap()
@@ -30,7 +38,7 @@ const Home = () => {
   
       });
     }
-  }, [currentPage])
+  }, [loading,currentPage])
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
@@ -67,23 +75,66 @@ const Home = () => {
 
   function handleUserClick(user){
     setcurrentSelectedUser(user)
-    setshowModal(true)
+    setshowModalNew(true)
+    setmodalContent(<EditUserForm currentSelectedUser={currentSelectedUser} updateUsers={updateUser} />)
     }
 
   function updateModal(value){
-    setshowModal(false)
+    setshowModalNew(false)
   }
 
+  function AddNewUser(params) {
+    console.log(params);
+  }
+
+  function handleNewClick(params) {
+    
+    setshowModalNew(true)
+    setmodalContent(<AddUser AddNewUser={AddNewUser}/>)    
+  }
+
+  function updateUser(params) {
+    
+    setshowModalEdit(false)
+    setLoading(true)
+    dispatch(updateUsers(params)).unwrap()
+    .then((payload)=>{
+
   
+      Swal.fire(
+        'Record Updated',
+        `${payload.success}`,
+        'success'
+      )
+
+      setLoading(false)
+
+    }).catch((error)=>{
+      Swal.fire(
+        'Update Failed',
+        `An error occurred: ${error.message}`,
+        'error'
+      );
+      setLoading(false);
+  
+    });
+
+   
+
+  }
  
 
   return (
   <>
-      <>
+      <div className="flex ">
         <SearchBar className="p-16" updateSearch={updateSearch}  >
-
         </SearchBar>
-      </>
+
+        <button onClick={handleNewClick} className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500">
+          Add New Client
+          <FaUserPlus/>
+        </button>
+      </div>
       <div className="flex flex-col">
         <div className="overflow-x-auto">
           <div className="p-1.5 w-full inline-block align-middle">
@@ -130,32 +181,42 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  <>
-                  {users && users.map(function(user,i) {
-                    return (
-                      <tr key={i} onClick={()=> handleUserClick(user)}>  
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {user.name}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{user.phone_number}</td>
-                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {user.meter_number}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                          <a className="text-green-500 hover:text-green-700" href="#">
-                          {user.status ? "Active" : "Not active"}
-                          </a>
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                            {formatDate(user.date_connected)}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                            {user.arears}
-                        </td>
-                    </tr>
-                    )
-                  })}
-                  </>
+                {loading ? (
+                  <tr>
+                    <td>
+                      <LineWave color="blue" />
+                    </td>
+                  </tr>
+                ) : (
+                 
+                    <>
+                      {users && users.map(function(user,i) {
+                        return (
+                          <tr key={i} onClick={()=> handleUserClick(user)}>  
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {user.name}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">{user.phone_number}</td>
+                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                              {user.meter_number}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                              <a className="text-green-500 hover:text-green-700" href="#">
+                              {user.status ? "Active" : "Not active"}
+                              </a>
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                {formatDate(user.date_connected)}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                {user.arears}
+                            </td>
+                        </tr>
+                        )
+                      })}
+                   </>
+                  
+                )}
                 </tbody>
               </table>
             </div>
@@ -177,14 +238,12 @@ const Home = () => {
           activeClassName={"pagination__link--active"}
         />
       </div>
-
-      {showModal && currentSelectedUser ? (
+      
+     {showModalNew && currentSelectedUser ? (
         <Modal
-         setshowModal={updateModal} 
+         setshowModalNew={updateModal} 
         >
-
-          <EditUserForm currentSelectedUser={currentSelectedUser} />
-
+          {modalContent}
         </Modal>
       ):null}
   </>

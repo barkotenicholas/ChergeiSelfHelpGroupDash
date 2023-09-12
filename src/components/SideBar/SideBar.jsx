@@ -22,9 +22,14 @@ export default function SideBar() {
           <Link to="/">
             <SideBarItem icon={<FaHome/>} text="Home" expanded={expanded}  />
           </Link>
-          <Link to="/Users">
-          <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
+          <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded}>
+            <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
+            <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
 
+          </SideBarItem>
+
+          <Link to="/Users">
+            <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
           </Link>
         </ul>
 

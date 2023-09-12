@@ -37,7 +37,7 @@ export const updateUsers = createAsyncThunk(
     async(update,thunkAPI)=>{
         try {
             const response =await updateSingleUsers(update)
-            return response.da
+            return response.data
         } catch (error) {
             
         }

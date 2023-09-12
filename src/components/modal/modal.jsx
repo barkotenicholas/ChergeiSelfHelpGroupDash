@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Modal = ({setshowModal,currentSelectedUser,children}) => {
+const Modal = ({setshowModalNew,currentSelectedUser,children}) => {
 
     return (
         <>
@@ -35,7 +35,7 @@ const Modal = ({setshowModal,currentSelectedUser,children}) => {
                             <button
                                 className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button"
-                                onClick={()=>setshowModal(false)}
+                                onClick={()=>setshowModalNew(false)}
                             >
                                 Close
                             </button>
