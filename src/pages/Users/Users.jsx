@@ -9,6 +9,9 @@ import { LineWave } from "react-loader-spinner";
 import { FaUserPlus } from "react-icons/fa";
 import AddUser from "../../components/modal/AddUser";
 import Swal from "sweetalert2";
+import DifferentCollection from "../../components/modal/DifferentCollection";
+import UserDetails from "../UserMeterReadings/UserDetails";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,14 +22,15 @@ const Home = () => {
   const [users,setUsers] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
   const [showModalEdit, setshowModalEdit] = useState(false);
   const [showModalNew, setshowModalNew] = useState(false)
-  const [currentSelectedUser, setcurrentSelectedUser] = useState(null)
+  const [currentSelectedUser, setcurrentSelectedUser] = useState({})
   const [loading, setLoading] = useState(false);
   const [modalContent, setmodalContent] = useState(null)
-
+  const [choice, setchoice] = useState(null)
   useEffect(() => {
     if(search == ""){
       dispatch(getAllUsers(currentPage)).unwrap()
@@ -72,11 +76,26 @@ const Home = () => {
   function updateSearch(value){
     setSearch(value)
   }
+  function selectedChoice (choice,user){
+    setshowModalNew(false)
+    if(choice == "Edit"){
+      setmodalContent(<EditUserForm currentSelectedUser={user} updateUsers={updateUser} />)
 
-  function handleUserClick(user){
-    setcurrentSelectedUser(user)
+    }
+
+    if(choice == "ViewReading"){
+      navigate('/UsersDetails',{ state:{user:user}})
+
+    }
+  }
+  const handleUserClick =(curruser) =>{
+    console.log(curruser);
+    setcurrentSelectedUser(()=>{
+      return curruser
+    });
+    console.log(currentSelectedUser);
     setshowModalNew(true)
-    setmodalContent(<EditUserForm currentSelectedUser={currentSelectedUser} updateUsers={updateUser} />)
+    setmodalContent(<DifferentCollection user={curruser} selectedChoice={selectedChoice} />)
     }
 
   function updateModal(value){

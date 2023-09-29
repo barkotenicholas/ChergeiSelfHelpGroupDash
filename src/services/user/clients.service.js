@@ -13,3 +13,7 @@ export const searchUsers=(search)=>{
 export const updateSingleUsers=(update)=>{
     return axios.patch(`${BASE_URL}/api/v1/clients`,update)
 }
+
+export const getUserReadings = (meter_number)=>{
+    return axios.get(`${BASE_URL}/api/v1/readings/${meter_number}`)
+}

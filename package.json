@@ -21,6 +21,7 @@
     "react-paginate": "^8.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.5",
+    "react-table": "^7.8.0",
     "react-toastify-redux": "^1.0.0-rc.2",
     "sweetalert2": "^11.7.27",
     "yup": "^0.32.11"

@@ -24,8 +24,6 @@ export default function SideBar() {
           </Link>
           <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded}>
             <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
-            <SideBarItem icon={<FaUsers/>} text="Users" expanded={expanded} />
-
           </SideBarItem>
 
           <Link to="/Users">
