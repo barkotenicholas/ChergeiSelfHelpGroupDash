@@ -31,6 +31,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [modalContent, setmodalContent] = useState(null)
   const [choice, setchoice] = useState(null)
+
   useEffect(() => {
     if(search == ""){
       dispatch(getAllUsers(currentPage)).unwrap()
@@ -77,8 +78,9 @@ const Home = () => {
     setSearch(value)
   }
   function selectedChoice (choice,user){
-    setshowModalNew(false)
+    // setshowModalNew(false)
     if(choice == "Edit"){
+    
       setmodalContent(<EditUserForm currentSelectedUser={user} updateUsers={updateUser} />)
 
     }
