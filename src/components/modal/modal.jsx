@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-const Modal = ({setshowModalNew,currentSelectedUser,children}) => {
-
+const Modal = ({setshowModalNew,title,currentSelectedUser,children}) => {
     return (
         <>
             <div
@@ -16,7 +15,7 @@ const Modal = ({setshowModalNew,currentSelectedUser,children}) => {
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-3xl font-semibold">
-                                Modal Title
+                                {title}
                             </h3>
                             <button
                                 className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"

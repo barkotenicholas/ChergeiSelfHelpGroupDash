@@ -31,7 +31,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [modalContent, setmodalContent] = useState(null)
   const [choice, setchoice] = useState(null)
-
+  const [modalTitle, setModalTitle] = useState("")
   useEffect(() => {
     if(search == ""){
       dispatch(getAllUsers(currentPage)).unwrap()
@@ -80,7 +80,9 @@ const Home = () => {
   function selectedChoice (choice,user){
     // setshowModalNew(false)
     if(choice == "Edit"){
-    
+      setModalTitle((prev)=> {
+        return "Edit"
+      })
       setmodalContent(<EditUserForm currentSelectedUser={user} updateUsers={updateUser} />)
 
     }
@@ -95,6 +97,9 @@ const Home = () => {
     setcurrentSelectedUser(()=>{
       return curruser
     });
+    setModalTitle(()=> {
+      return "Choose Input"
+    })
     console.log(currentSelectedUser);
     setshowModalNew(true)
     setmodalContent(<DifferentCollection user={curruser} selectedChoice={selectedChoice} />)
@@ -111,6 +116,7 @@ const Home = () => {
   function handleNewClick(params) {
     
     setshowModalNew(true)
+  
     setmodalContent(<AddUser AddNewUser={AddNewUser}/>)    
   }
 
@@ -262,6 +268,7 @@ const Home = () => {
       
      {showModalNew && currentSelectedUser ? (
         <Modal
+          title={modalTitle}
          setshowModalNew={updateModal} 
         >
           {modalContent}
