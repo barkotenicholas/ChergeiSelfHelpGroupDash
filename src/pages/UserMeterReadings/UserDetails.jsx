@@ -2,11 +2,10 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { getUsersDetails } from "../../features/user/ClientsActions";
 import { useDispatch } from 'react-redux';
 import { useTable , usePagination  , useSortBy} from 'react-table';
-import { data } from 'autoprefixer';
 import { useLocation } from 'react-router-dom';
 import { LineWave } from 'react-loader-spinner';
 import { IoCaretDown,  IoCaretUp } from "react-icons/io5";
-function UserDetails({ meternumber }) {
+function UserDetails() {
   const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(true);

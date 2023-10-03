@@ -17,3 +17,7 @@ export const updateSingleUsers=(update)=>{
 export const getUserReadings = (meter_number)=>{
     return axios.get(`${BASE_URL}/api/v1/readings/${meter_number}`)
 }
+
+export const getUserPayments = (meter_number)=>{
+    return axios.get(`${BASE_URL}/api/v1/payments/${meter_number}`)
+}

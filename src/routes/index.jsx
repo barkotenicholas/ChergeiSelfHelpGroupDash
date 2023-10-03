@@ -6,6 +6,8 @@ import Users from "../pages/Users/Users";
 import Login from "../pages/login/Login";
 import Layout from "../components/shared/layout";
 import UserDetails from "../pages/UserMeterReadings/UserDetails";
+import UsersPayments from "../pages/UserPayments/UsersPayments";
+
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -14,6 +16,7 @@ export const AppRoutes = () => {
           <Route index  element={<Home/>} />
           <Route path="/Users" element={<Users/>} />
           <Route path="/UsersDetails" element={<UserDetails/>} />
+          <Route path="/UserPayments" element={<UsersPayments/>} />
         </Route>
         <Route path="login" element={<Login />} />
       </Routes>

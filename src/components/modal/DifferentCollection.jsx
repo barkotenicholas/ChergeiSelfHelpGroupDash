@@ -20,7 +20,9 @@ function DifferentCollection({selectedChoice,user}) {
             <button className="inline-block border border-teal-500 text-teal-500 rounded-full px-6 py-2 mr-4"
                 onClick={()=>checkSelect("Edit",user)}
             >Edit User</button>
-            <button className="inline-block border border-teal-500 text-teal-500 rounded-full px-6 py-2 mr-4">Button 3</button>
+            <button className="inline-block border border-teal-500 text-teal-500 rounded-full px-6 py-2 mr-4"
+                onClick={()=>checkSelect("Payments", user)}
+            >View Payments</button>
         </div>
     </>
   )

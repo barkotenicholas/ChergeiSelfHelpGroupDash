@@ -91,6 +91,11 @@ const Home = () => {
       navigate('/UsersDetails',{ state:{user:user}})
 
     }
+
+    if(choice == "Payments"){
+      navigate('/UserPayments',{ state:{user:user}})
+
+    }
   }
   const handleUserClick =(curruser) =>{
     console.log(curruser);

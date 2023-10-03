@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetUsers ,searchUsers ,updateSingleUsers ,getUserReadings} from "../../services/user/clients.service";
+import { GetUsers ,searchUsers ,updateSingleUsers ,getUserReadings ,getUserPayments} from "../../services/user/clients.service";
 
 
 export const getAllUsers =  createAsyncThunk(
@@ -48,9 +48,20 @@ export const getUsersDetails = createAsyncThunk(
     "clients/getClientReadings",
     async(meternumber,thunkAPI)=>{
         try {
-            console.log(meternumber);
             const response =await getUserReadings(meternumber)
             return response.data
+        } catch (error) {
+            
+        }
+    }
+)
+
+export const getUsersPayments = createAsyncThunk(
+    "client/getClientPayments",
+    async(meternumber,thunkAPI)=>{
+        try {
+            const response = await getUserPayments(meternumber)
+            return response.data;
         } catch (error) {
             
         }
