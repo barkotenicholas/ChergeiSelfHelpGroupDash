@@ -5,6 +5,7 @@ import { useTable , usePagination  , useSortBy} from 'react-table';
 import { useLocation } from 'react-router-dom';
 import { LineWave } from 'react-loader-spinner';
 import { IoCaretDown,  IoCaretUp } from "react-icons/io5";
+import { FaTrashAlt , FaEdit } from "react-icons/fa";
 function UsersPayments() {
   const dispatch = useDispatch()
 
@@ -30,6 +31,13 @@ function UsersPayments() {
   console.log(recordData);
   const data = React.useMemo(() => recordData, [recordData])
 
+  const handleDelete=(id)=>{
+    console.log(users);
+  }
+
+  const handleEdit=(id)=>{
+    console.log(users);
+  }
 
   const columns = useMemo(() => [
 
@@ -48,6 +56,16 @@ function UsersPayments() {
     {
       Header: "Amount",
       accessor: "amount_payed"
+    },
+    {
+      "Header":"Actions",
+      "accessor":"id",
+      Cell:({row})=>(
+        <div className='flex'>
+          <FaEdit onClick={handleEdit} >Edit</FaEdit>
+          <FaTrashAlt onClick={handleDelete} >Delete</FaTrashAlt>
+        </div>
+      ),
     }
   ], []);
 
