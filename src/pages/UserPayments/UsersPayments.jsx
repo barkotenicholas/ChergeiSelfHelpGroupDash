@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { getUsersPayments } from "../../features/user/ClientsActions";
 import { useDispatch } from 'react-redux';
-import { useTable , usePagination  , useSortBy} from 'react-table';
+import { useTable, usePagination, useSortBy } from 'react-table';
 import { useLocation } from 'react-router-dom';
 import { LineWave } from 'react-loader-spinner';
-import { IoCaretDown,  IoCaretUp } from "react-icons/io5";
-import { FaTrashAlt , FaEdit } from "react-icons/fa";
+import { IoCaretDown, IoCaretUp } from "react-icons/io5";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import Modal from '../../components/modal/modal';
+import UpdatePayment from '../../components/modal/UpdatePayment';
+
 function UsersPayments() {
   const dispatch = useDispatch()
 
@@ -14,6 +17,8 @@ function UsersPayments() {
   const [totalPages, setTotalPages] = useState(1);
   const [recordData, setrecordData] = useState([]);
   const location = useLocation();
+  const [showModalNew, setshowModalNew] = useState(false)
+  const [modalContent, setmodalContent] = useState(null)
 
   // Access the passed props
   const myProp = location.state && location.state.user;
@@ -31,12 +36,15 @@ function UsersPayments() {
   console.log(recordData);
   const data = React.useMemo(() => recordData, [recordData])
 
-  const handleDelete=(id)=>{
+  const handleDelete = (id) => {
     console.log(users);
   }
 
-  const handleEdit=(id)=>{
-    console.log(users);
+  const handleEdit = (data) => {
+    console.log(data.values.amount_payed);
+    setshowModalNew(true)
+    setmodalContent(<UpdatePayment old_payment={data.values.amount_payed}></UpdatePayment>)
+
   }
 
   const columns = useMemo(() => [
@@ -58,12 +66,13 @@ function UsersPayments() {
       accessor: "amount_payed"
     },
     {
-      "Header":"Actions",
-      "accessor":"id",
-      Cell:({row})=>(
+      "Header": "Actions",
+      "accessor": "_id",
+      Cell: ({ row }) => (
+        
         <div className='flex'>
-          <FaEdit onClick={handleEdit} >Edit</FaEdit>
-          <FaTrashAlt onClick={handleDelete} >Delete</FaTrashAlt>
+          <FaEdit onClick={()=>handleEdit(row)} >Edit</FaEdit>
+          <FaTrashAlt onClick={()=>handleDelete(row)} >Delete</FaTrashAlt>
         </div>
       ),
     }
@@ -73,115 +82,122 @@ function UsersPayments() {
   console.log(columns);
 
 
-  const { getTableBodyProps, 
+  const { getTableBodyProps,
     getTableProps,
-     headerGroups,
-     page, 
-     nextPage,
-     previousPage ,
-     pageOptions ,
-     state,
-     canNextPage, 
-     canPreviousPage , 
-     gotoPage, 
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    pageOptions,
+    state,
+    canNextPage,
+    canPreviousPage,
+    gotoPage,
 
-     pageCount ,
-     prepareRow  } = useTable({ columns, data: data },useSortBy,usePagination);
+    pageCount,
+    prepareRow } = useTable({ columns, data: data }, useSortBy, usePagination);
 
-  const {pageIndex} = state
+  const { pageIndex } = state
   return (
     <div>
 
-    {loading ? <LineWave
-      height="100"
-      width="100"
-      color="#4fa94d"
-      ariaLabel="line-wave"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-      firstLineColor=""
-      middleLineColor=""
-      lastLineColor=""
-    /> :
-      <>
-        <p>
+      {loading ? <LineWave
+        height="100"
+        width="100"
+        color="#4fa94d"
+        ariaLabel="line-wave"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+        firstLineColor=""
+        middleLineColor=""
+        lastLineColor=""
+      /> :
+        <>
+          <p>
 
-        </p>
-        <div className="p-1.5 w-full inline-block align-middle">
-          <div className="overflow-hidden border rounded-lg">
+          </p>
+          <div className="p-1.5 w-full inline-block align-middle">
+            <div className="overflow-hidden border rounded-lg">
 
-            {data && (
-              <>
-                <table className="min-w-full divide-y divide-gray-200" {...getTableProps()}>
-                  <thead className="bg-gray-50" >
-                    {
-                      headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()} >
-                          { 
-                            headerGroup.headers.map((column) => (
-                              <th className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
-                                {...column.getHeaderProps(column.getSortByToggleProps())} 
+              {data && (
+                <>
+                  <table className="min-w-full divide-y divide-gray-200" {...getTableProps()}>
+                    <thead className="bg-gray-50" >
+                      {
+                        headerGroups.map((headerGroup) => (
+                          <tr {...headerGroup.getHeaderGroupProps()} >
+                            {
+                              headerGroup.headers.map((column) => (
+                                <th className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                                  {...column.getHeaderProps(column.getSortByToggleProps())}
                                 >
-                                {column.render("Header")}
-                                <span>
-                                  {column.isSorted ? (column.isSortedDesc ? <IoCaretUp/>:<IoCaretDown/>):""}
-                                </span>
-                              </th>
-                            ))
-                          }
-                        </tr>
-                      ))
-                    }
-                  </thead>
-                  <tbody className="divide-y divide-gray-200" {...getTableBodyProps()}>
-                    {page.map((row) => {
-                      prepareRow(row)
-                      return (
-                        <tr {...row.getRowProps()}>
-                          {row.cells.map((cell) => (
-                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap" {...cell.getCellProps()} >
-                              {cell.render("Cell")}
-                            </td>
-                          ))}
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </>
+                                  {column.render("Header")}
+                                  <span>
+                                    {column.isSorted ? (column.isSortedDesc ? <IoCaretUp /> : <IoCaretDown />) : ""}
+                                  </span>
+                                </th>
+                              ))
+                            }
+                          </tr>
+                        ))
+                      }
+                    </thead>
+                    <tbody className="divide-y divide-gray-200" {...getTableBodyProps()}>
+                      {page.map((row) => {
+                        prepareRow(row)
+                        return (
+                          <tr {...row.getRowProps()}>
+                            {row.cells.map((cell) => (
+                              <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap" {...cell.getCellProps()} >
+                                {cell.render("Cell")}
+                              </td>
+                            ))}
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </>
 
-            )}
-                <div className='m-5'>
-                  <div className="inline-flex">
-                    <span className='mr-2'>
-                      Page{' '}
-                      <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                      </strong>
-                    </span>
+              )}
+              <div className='m-5'>
+                <div className="inline-flex">
+                  <span className='mr-2'>
+                    Page{' '}
+                    <strong>
+                      {pageIndex + 1} of {pageOptions.length}
+                    </strong>
+                  </span>
 
-                    <button onClick={()=>gotoPage(0)} disabled={!canPreviousPage}>
-                      {'<<'}
-                    </button>
-                    <button onClick={()=> previousPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled={!canPreviousPage}>
-                      Prev
-                    </button>
-                    <button onClick={()=> nextPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" disabled={!canNextPage}>
-                      Next
-                    </button>
+                  <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                    {'<<'}
+                  </button>
+                  <button onClick={() => previousPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled={!canPreviousPage}>
+                    Prev
+                  </button>
+                  <button onClick={() => nextPage()} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" disabled={!canNextPage}>
+                    Next
+                  </button>
 
-                    <button onClick={()=>gotoPage(pageCount-1)} disabled={!canNextPage}>
-                      {'>>'}
-                    </button>
-                  </div>
+                  <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                    {'>>'}
+                  </button>
                 </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </>
-    }
-
-  </div>  )
+        </>
+      }
+    {showModalNew ? (
+            <Modal
+              title="Edit Payment Details"
+            setshowModalNew={setshowModalNew} 
+            >
+              {modalContent}
+            </Modal>
+          ):null}
+    </div>)
 }
 
 export default UsersPayments
