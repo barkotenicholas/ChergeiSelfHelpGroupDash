@@ -2,14 +2,14 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-function UpdatePayment({old_payment}) {
-
+function UpdatePayment({info,UpdateUserPayment}) {
+    console.log(info);
     const formik = useFormik({
         initialValues: {
-            new_payment: old_payment ? old_payment : "",
+            new_payment: info ? info.amount_payed : "",
         },
         validationSchema: Yup.object({
-            new_payment:Yup.number().required("NewPayment is requred")
+            new_payment:Yup.number().required("NewPayment is required")
             // email:Yup.string().email().required("Email is Required"),
             // password: Yup.string()
             // .required('Please Enter your password')
@@ -19,7 +19,10 @@ function UpdatePayment({old_payment}) {
             // ), 
         }),
         onSubmit: (values) => {
-            updateUsers(values)
+            console.log(values.new_payment);
+            let updateRead = values.new_payment
+            info.amount_payed = updateRead
+            // UpdateUserPayment(info)
         }
     });
 

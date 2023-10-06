@@ -17,6 +17,7 @@ function UsersPayments() {
   const [totalPages, setTotalPages] = useState(1);
   const [recordData, setrecordData] = useState([]);
   const location = useLocation();
+  const [paymentAmount, setPaymentAmount] = useState(0)
   const [showModalNew, setshowModalNew] = useState(false)
   const [modalContent, setmodalContent] = useState(null)
 
@@ -43,7 +44,7 @@ function UsersPayments() {
   const handleEdit = (data) => {
     console.log(data.values.amount_payed);
     setshowModalNew(true)
-    setmodalContent(<UpdatePayment old_payment={data.values.amount_payed}></UpdatePayment>)
+    setmodalContent(<UpdatePayment info={data.values} UpdateUserPayment={UpdateUserPayment}></UpdatePayment>)
 
   }
 
@@ -81,6 +82,9 @@ function UsersPayments() {
   console.log(data);
   console.log(columns);
 
+  function UpdateUserPayment(data){
+    console.log(data);
+  }
 
   const { getTableBodyProps,
     getTableProps,
