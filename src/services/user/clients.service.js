@@ -22,8 +22,15 @@ export const getUserPayments = (meter_number)=>{
     return axios.get(`${BASE_URL}/api/v1/payments/${meter_number}`)
 }
 
+export const addNewUsers = (newPayment)=>{
+    return axios.post(`${BASE_URL}/api/v1/payments/`,newPayment)
+}
 
 export const updateUserPayment = (updatePayment)=>{
     return axios.patch(`${BASE_URL}/api/v1/payments/`,updatePayment)
 }
- 
+
+export const deleteuserPayment = (deletePayment)=>{
+    return axios.delete(`${BASE_URL}/api/v1/payments/`,deletePayment)
+
+}
