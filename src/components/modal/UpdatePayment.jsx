@@ -3,7 +3,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 function UpdatePayment({info,UpdateUserPayment}) {
-    console.log(info);
     const formik = useFormik({
         initialValues: {
             new_payment: info ? info.amount_payed : "",
@@ -19,10 +18,10 @@ function UpdatePayment({info,UpdateUserPayment}) {
             // ), 
         }),
         onSubmit: (values) => {
-            console.log(values.new_payment);
+
             let updateRead = values.new_payment
             info.amount_payed = updateRead
-            // UpdateUserPayment(info)
+            UpdateUserPayment(info)
         }
     });
 

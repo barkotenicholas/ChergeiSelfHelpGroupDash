@@ -132,14 +132,14 @@ const Home = () => {
     dispatch(updateUsers(params)).unwrap()
     .then((payload)=>{
 
-  
+
+      setLoading(false)
       Swal.fire(
         'Record Updated',
         `${payload.success}`,
         'success'
       )
 
-      setLoading(false)
 
     }).catch((error)=>{
       Swal.fire(

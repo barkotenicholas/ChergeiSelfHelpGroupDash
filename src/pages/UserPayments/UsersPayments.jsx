@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { getUsersPayments } from "../../features/user/ClientsActions";
+import { getUsersPayments ,updateUsersPayment } from "../../features/user/ClientsActions";
 import { useDispatch } from 'react-redux';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { useLocation } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { IoCaretDown, IoCaretUp } from "react-icons/io5";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import Modal from '../../components/modal/modal';
 import UpdatePayment from '../../components/modal/UpdatePayment';
+import Swal from "sweetalert2";
 
 function UsersPayments() {
   const dispatch = useDispatch()
@@ -47,7 +48,37 @@ function UsersPayments() {
     setmodalContent(<UpdatePayment info={data.values} UpdateUserPayment={UpdateUserPayment}></UpdatePayment>)
 
   }
+  function UpdateUserPayment(data){
+    setLoading((prev)=>true)
+    setshowModalNew((prev)=>false)
+    const new_data={
+      "meter_number":users.meter_number,
+      "payment":data.amount_payed,
+      "id":data._id
+    }
+    console.log(new_data);
+    dispatch(updateUsersPayment(new_data)).unwrap()
+    .then((payload) => {
+      setLoading((prev)=>false)
 
+      console.log(payload);
+      Swal.fire(
+        'Record Updated',
+        `${payload.message}`,
+        'success'
+      )
+
+    }).catch((error)=>{
+      Swal.fire(
+        'Update Failed',
+        `An error occurred: ${error.message}`,
+        'error'
+      );
+      setLoading((prev)=>false)
+  
+    });
+
+  }
   const columns = useMemo(() => [
 
     {
@@ -82,9 +113,7 @@ function UsersPayments() {
   console.log(data);
   console.log(columns);
 
-  function UpdateUserPayment(data){
-    console.log(data);
-  }
+
 
   const { getTableBodyProps,
     getTableProps,
