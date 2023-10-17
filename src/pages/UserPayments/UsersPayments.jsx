@@ -247,7 +247,7 @@ function UsersPayments() {
       }
       {showModalNew ? (
         <Modal
-          title="Edit Payment Details"
+          title="Add Payment Details"
           setshowModalNew={setshowModalNew}
         >
           {modalContent}

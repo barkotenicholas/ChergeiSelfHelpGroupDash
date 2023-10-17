@@ -4,31 +4,23 @@ import * as Yup from 'yup'
 
 function AddNewPayment({ users }) {
 
-    console.log(users);
     const formik = useFormik({
         initialValues: {
             meter_number: users.meter_number,
             amount: 0,
-            method: "mpesa"
+            method: "transnational"
         },
         validationSchema: Yup.object({
             meter_number: Yup.number().required("Meter Number is required"),
             amount: Yup.number().positive().required("Meter Number is required"),
             method: Yup.string().required("Method is required")
-            // email:Yup.string().email().required("Email is Required"),
-            // password: Yup.string()
-            // .required('Please Enter your password')
-            // .matches(
-            //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-            // ), 
         }),
         onSubmit: (values) => {
-
+            console.log(values);
         }
     });
 
-  
+
 
     return (
         <>
@@ -60,17 +52,13 @@ function AddNewPayment({ users }) {
                         </label>
                     </div>
                     <div className="md:w-2/3">
-                        <label for="cars">Choose Payment Method:</label>
                         <select
-                            id="cars"
-                            name="PaymentMethods"
+                            id="method"
+                            name="method"
                             value={formik.values.method}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         >
-                            <option value="" label="Select Payment Method" >
-                                Select a color {" "}
-                            </option>
                             <option value="mpesa">mpesa</option>
                             <option value="transnational">transnational</option>
                             <option value="cash">cash</option>
