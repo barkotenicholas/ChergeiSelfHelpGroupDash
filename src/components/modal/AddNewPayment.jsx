@@ -1,8 +1,11 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux';
 
-function AddNewPayment({ users }) {
+function AddNewPayment({ users , AddPayment}) {
+
+    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -16,8 +19,8 @@ function AddNewPayment({ users }) {
             method: Yup.string().required("Method is required")
         }),
         onSubmit: (values) => {
-            console.log(values);
-        }
+            AddPayment(values)
+            }
     });
 
 

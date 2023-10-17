@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { getUsersPayments, updateUsersPayment } from "../../features/user/ClientsActions";
+import { getUsersPayments, updateUsersPayment, addUserPayment, deleteSingleUserPayment } from "../../features/user/ClientsActions";
 import { useDispatch } from 'react-redux';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { useLocation } from 'react-router-dom';
@@ -37,29 +37,38 @@ function UsersPayments() {
         setrecordData(payload.readings);
         setLoading(false)
       });
-  }, [])
-  console.log(recordData);
+  }, [loading])
+
   const data = React.useMemo(() => recordData, [recordData])
 
   const handleDelete = (data) => {
-    console.log(data.values.amount_payed);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: `Do You want to delete this payment Record ${data.values.amount_payed} `,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
+
+    setshowModalNew(false)
+    setLoading(true)
+    dispatch(deleteSingleUserPayment({
+      "meter_number": users.meter_number,
+      "id": data.values._id
+    })).unwrap()
+      .then((payload) => {
+
+        setLoading(false)
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Record Updated',
+          `${payload.success}`,
           'success'
         )
-      }
-    })
+
+
+      }).catch((error) => {
+        Swal.fire(
+          'Update Failed',
+          `An error occurred: ${error.message}`,
+          'error'
+        );
+        setLoading(false);
+
+      });
+
   }
 
   const handleEdit = (data) => {
@@ -132,7 +141,35 @@ function UsersPayments() {
 
   function handleNewClick() {
     setshowModalNew(true)
-    setmodalContent(<AddNewPayment users={users}/>)
+    setmodalContent(<AddNewPayment users={users} AddPayment={AddPayment} />)
+  }
+
+  function AddPayment(values) {
+    const date = new Date()
+    values.date = date
+    setshowModalNew(false)
+    setLoading(true)
+    dispatch(addUserPayment(values)).unwrap()
+      .then((payload) => {
+
+
+        setLoading(false)
+        Swal.fire(
+          'Record Updated',
+          `${payload.message}`,
+          'success'
+        )
+
+
+      }).catch((error) => {
+        Swal.fire(
+          'Update Failed',
+          `An error occurred: ${error.message}`,
+          'error'
+        );
+        setLoading(false);
+
+      });
   }
 
   const { getTableBodyProps,

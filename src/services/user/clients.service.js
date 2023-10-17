@@ -31,6 +31,6 @@ export const updateUserPayment = (updatePayment)=>{
 }
 
 export const deleteuserPayment = (deletePayment)=>{
-    return axios.delete(`${BASE_URL}/api/v1/payments/`,deletePayment)
+    return axios.delete(`${BASE_URL}/api/v1/payments/`,{data:deletePayment})
 
 }
