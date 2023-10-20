@@ -1,6 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetUsers ,searchUsers ,updateSingleUsers ,getUserReadings ,getUserPayments ,updateUserPayment,deleteuserPayment,addNewUsers} from "../../services/user/clients.service";
+import { GetUsers ,searchUsers ,updateSingleUsers ,getUserReadings ,getUserPayments ,updateUserPayment,deleteuserPayment,addNewUsers , GetUser} from "../../services/user/clients.service";
 
+export const getSingleUser = createAsyncThunk(
+    "clients/getSingleClients",
+    async (id,thunkAPI) =>{
+        try {
+            const response = await GetUser(id);
+            
+            return response.data
+
+        } catch (error) {
+            
+        }
+    }   
+)
 
 export const getAllUsers =  createAsyncThunk(
     "clients/getClients",

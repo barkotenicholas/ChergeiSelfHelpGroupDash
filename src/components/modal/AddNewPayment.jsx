@@ -3,24 +3,24 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux';
 
-function AddNewPayment({ users , AddPayment}) {
+function AddNewPayment({ users, AddPayment }) {
 
     const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
             meter_number: users.meter_number,
-            amount: 0,
+            amount: "",
             method: "transnational"
         },
         validationSchema: Yup.object({
             meter_number: Yup.number().required("Meter Number is required"),
-            amount: Yup.number().positive().required("Meter Number is required"),
+            amount: Yup.number().positive().required("Amount is required"),
             method: Yup.string().required("Method is required")
         }),
         onSubmit: (values) => {
             AddPayment(values)
-            }
+        }
     });
 
 
@@ -45,6 +45,11 @@ function AddNewPayment({ users , AddPayment}) {
                             value={formik.values.amount}
                             onBlur={formik.handleBlur}
                             className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" />
+                        {formik.errors.amount && formik.touched.amount ? (
+                            <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                {formik.errors.amount}
+                            </span>
+                        ) : null}
                     </div>
                 </div>
 

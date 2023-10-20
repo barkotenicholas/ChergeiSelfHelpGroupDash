@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { getUsersPayments, updateUsersPayment, addUserPayment, deleteSingleUserPayment } from "../../features/user/ClientsActions";
+import { getUsersPayments, updateUsersPayment, addUserPayment, deleteSingleUserPayment, getSingleUser } from "../../features/user/ClientsActions";
 import { useDispatch } from 'react-redux';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { useLocation } from 'react-router-dom';
@@ -8,9 +8,9 @@ import { IoCaretDown, IoCaretUp } from "react-icons/io5";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import Modal from '../../components/modal/modal';
 import UpdatePayment from '../../components/modal/UpdatePayment';
-import { FaPlusSquare } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AddNewPayment from '../../components/modal/AddNewPayment';
+import UserPaymentHeader from './UserPaymentHeader';
 
 
 function UsersPayments() {
@@ -28,7 +28,6 @@ function UsersPayments() {
   // Access the passed props
   const myProp = location.state && location.state.user;
   const [users, setUsers] = useState(myProp)
-
   useEffect(() => {
 
     dispatch(getUsersPayments(users.meter_number)).unwrap()
@@ -37,6 +36,7 @@ function UsersPayments() {
         setrecordData(payload.readings);
         setLoading(false)
       });
+
   }, [loading])
 
   const data = React.useMemo(() => recordData, [recordData])
@@ -205,10 +205,7 @@ function UsersPayments() {
       /> :
         <>
           <div>
-            <button onClick={handleNewClick} className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500">
-              Add New Payment
-              <FaPlusSquare />
-            </button>
+           <UserPaymentHeader users={users} handleNewClick={handleNewClick} />
           </div>
           <div className="p-1.5 w-full inline-block align-middle">
             <div className="overflow-hidden border rounded-lg">
