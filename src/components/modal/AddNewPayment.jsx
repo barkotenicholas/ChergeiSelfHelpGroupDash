@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 function AddNewPayment({ users, AddPayment }) {
 
-    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {

@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 
 function UpdatePayment({ info, UpdateUserPayment }) {
     const formik = useFormik({
-        initialValues: {
+        initialValues: { 
             new_payment: info ? info.amount_payed : "",
         },
         validationSchema: Yup.object({

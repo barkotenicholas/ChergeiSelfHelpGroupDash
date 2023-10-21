@@ -34,7 +34,7 @@ function UsersPayments() {
       .then((payload) => {
 
         setrecordData(payload.readings);
-        setLoading(false)
+        setLoading(false) 
       });
 
   }, [loading])

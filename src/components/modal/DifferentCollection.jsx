@@ -2,7 +2,6 @@ import React from 'react'
 
 function DifferentCollection({selectedChoice,user}) {
 
-    console.log(user);
     function checkSelect(params, user) {
         console.log(user);
         selectedChoice(params, user)

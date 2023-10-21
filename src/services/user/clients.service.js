@@ -39,3 +39,9 @@ export const deleteuserPayment = (deletePayment)=>{
     return axios.delete(`${BASE_URL}/api/v1/payments/`,{data:deletePayment})
 
 }
+
+export const addUserMeterReading = (newReading)=>{
+
+    return axios.post(`${BASE_URL}/api/v1/readings/`,newReading)
+
+}

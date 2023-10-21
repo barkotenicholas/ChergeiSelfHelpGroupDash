@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { getAllUsers ,searchAllUsers ,updateUsers } from "../../features/user/ClientsActions";
+import { getAllUsers, searchAllUsers, updateUsers } from "../../features/user/ClientsActions";
 import ReactPaginate from 'react-paginate';
 import { SearchBar } from "../../components/searchbar/searchBar";
 import Modal from "../../components/modal/modal";
@@ -19,7 +19,7 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
-  const [users,setUsers] = useState()
+  const [users, setUsers] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
@@ -33,17 +33,17 @@ const Home = () => {
   const [choice, setchoice] = useState(null)
   const [modalTitle, setModalTitle] = useState("")
   useEffect(() => {
-    if(search == ""){
+    if (search == "") {
       dispatch(getAllUsers(currentPage)).unwrap()
-      .then((payload)=>{
-  
-        setUsers(payload.users)
-        setTotalPages(payload.totalPages)
-        setCurrentPage(payload.currentPage)
-  
-      });
+        .then((payload) => {
+
+          setUsers(payload.users)
+          setTotalPages(payload.totalPages)
+          setCurrentPage(payload.currentPage)
+
+        });
     }
-  }, [loading,currentPage])
+  }, [loading, currentPage])
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
@@ -51,66 +51,66 @@ const Home = () => {
   const pageCount = totalPages
   console.log(pageCount);
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected+1);
+    setCurrentPage(selectedPage.selected + 1);
   };
-  function formatDate (date){
+  function formatDate(date) {
     const a = new Date(date)
-    return  `${a.getFullYear()}-${a.getUTCMonth() + 1}-${a.getDate()}`
+    return `${a.getFullYear()}-${a.getUTCMonth() + 1}-${a.getDate()}`
   }
 
-  useEffect(() => { 
-    if(search == ""){
+  useEffect(() => {
+    if (search == "") {
 
-    }else{
-      dispatch(searchAllUsers({search:search.search,page:currentPage})).unwrap()
-      .then((payload)=>{
-        console.log(payload.users);
-        setUsers(payload.users)
-        setTotalPages(payload.totalPages)
-        setCurrentPage(payload.currentPage)
-  
-      });    
+    } else {
+      dispatch(searchAllUsers({ search: search.search, page: currentPage })).unwrap()
+        .then((payload) => {
+          console.log(payload.users);
+          setUsers(payload.users)
+          setTotalPages(payload.totalPages)
+          setCurrentPage(payload.currentPage)
+
+        });
     }
 
-  }, [search,currentPage])
-  
-  function updateSearch(value){
+  }, [search, currentPage])
+
+  function updateSearch(value) {
     setSearch(value)
   }
-  function selectedChoice (choice,user){
+  function selectedChoice(choice, user) {
     // setshowModalNew(false)
-    if(choice == "Edit"){
-      setModalTitle((prev)=> {
+    if (choice == "Edit") {
+      setModalTitle((prev) => {
         return "Edit"
       })
       setmodalContent(<EditUserForm currentSelectedUser={user} updateUsers={updateUser} />)
 
     }
 
-    if(choice == "ViewReading"){
-      navigate('/UsersDetails',{ state:{user:user}})
+    if (choice == "ViewReading") {
+      navigate('/UsersDetails', { state: { user: user } })
 
     }
 
-    if(choice == "Payments"){
-      navigate('/UserPayments',{ state:{user:user}})
+    if (choice == "Payments") {
+      navigate('/UserPayments', { state: { user: user } })
 
     }
   }
-  const handleUserClick =(curruser) =>{
+  const handleUserClick = (curruser) => {
     console.log(curruser);
-    setcurrentSelectedUser(()=>{
+    setcurrentSelectedUser(() => {
       return curruser
     });
-    setModalTitle(()=> {
+    setModalTitle(() => {
       return "Choose Input"
     })
     console.log(currentSelectedUser);
     setshowModalNew(true)
     setmodalContent(<DifferentCollection user={curruser} selectedChoice={selectedChoice} />)
-    }
+  }
 
-  function updateModal(value){
+  function updateModal(value) {
     setshowModalNew(false)
   }
 
@@ -119,52 +119,52 @@ const Home = () => {
   }
 
   function handleNewClick(params) {
-    
+
     setshowModalNew(true)
-  
-    setmodalContent(<AddUser AddNewUser={AddNewUser}/>)    
+
+    setmodalContent(<AddUser AddNewUser={AddNewUser} />)
   }
 
   function updateUser(params) {
-    
+
     setshowModalEdit(false)
     setLoading(true)
     dispatch(updateUsers(params)).unwrap()
-    .then((payload)=>{
+      .then((payload) => {
 
 
-      setLoading(false)
-      Swal.fire(
-        'Record Updated',
-        `${payload.success}`,
-        'success'
-      )
+        setLoading(false)
+        Swal.fire(
+          'Record Updated',
+          `${payload.success}`,
+          'success'
+        )
 
 
-    }).catch((error)=>{
-      Swal.fire(
-        'Update Failed',
-        `An error occurred: ${error.message}`,
-        'error'
-      );
-      setLoading(false);
-  
-    });
+      }).catch((error) => {
+        Swal.fire(
+          'Update Failed',
+          `An error occurred: ${error.message}`,
+          'error'
+        );
+        setLoading(false);
 
-   
+      });
+
+
 
   }
- 
+
 
   return (
-  <>
+    <>
       <div className="flex ">
         <SearchBar className="p-16" updateSearch={updateSearch}  >
         </SearchBar>
 
         <button onClick={handleNewClick} className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500">
           Add New Client
-          <FaUserPlus/>
+          <FaUserPlus />
         </button>
       </div>
       <div className="flex flex-col">
@@ -213,18 +213,18 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                {loading ? (
-                  <tr>
-                    <td>
-                      <LineWave color="blue" />
-                    </td>
-                  </tr>
-                ) : (
-                 
+                  {loading ? (
+                    <tr>
+                      <td>
+                        <LineWave color="blue" />
+                      </td>
+                    </tr>
+                  ) : (
+
                     <>
-                      {users && users.map(function(user,i) {
+                      {users && users.map(function (user, i) {
                         return (
-                          <tr key={i} onClick={()=> handleUserClick(user)}>  
+                          <tr key={i} onClick={() => handleUserClick(user)}>
                             <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                               {user.name}
                             </td>
@@ -234,28 +234,28 @@ const Home = () => {
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                               <a className="text-green-500 hover:text-green-700" href="#">
-                              {user.status ? "Active" : "Not active"}
+                                {user.status ? "Active" : "Not active"}
                               </a>
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                {formatDate(user.date_connected)}
+                              {formatDate(user.date_connected)}
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                {user.arears}
+                              {user.arears}
                             </td>
-                        </tr>
+                          </tr>
                         )
                       })}
-                   </>
-                  
-                )}
+                    </>
+
+                  )}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-      </div>  
-    
+      </div>
+
       <div className="" >
         <ReactPaginate
           previousLabel={"← Previous"}
@@ -270,17 +270,17 @@ const Home = () => {
           activeClassName={"pagination__link--active"}
         />
       </div>
-      
-     {showModalNew && currentSelectedUser ? (
+
+      {showModalNew && currentSelectedUser ? (
         <Modal
           title={modalTitle}
-         setshowModalNew={updateModal} 
+          setshowModalNew={updateModal}
         >
           {modalContent}
         </Modal>
-      ):null}
-  </>
-    );
+      ) : null}
+    </>
+  );
 };
 
 export default Home;
