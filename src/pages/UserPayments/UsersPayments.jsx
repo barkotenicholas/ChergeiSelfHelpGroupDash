@@ -32,7 +32,7 @@ function UsersPayments() {
 
     dispatch(getUsersPayments(users.meter_number)).unwrap()
       .then((payload) => {
-
+        console.log(payload);
         setrecordData(payload.readings);
         setLoading(false) 
       });

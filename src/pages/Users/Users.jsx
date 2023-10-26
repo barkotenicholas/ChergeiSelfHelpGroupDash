@@ -84,17 +84,18 @@ const Home = () => {
         return "Edit"
       })
       setmodalContent(<EditUserForm currentSelectedUser={user} updateUsers={updateUser} />)
-
     }
 
     if (choice == "ViewReading") {
       navigate('/UsersDetails', { state: { user: user } })
-
     }
 
     if (choice == "Payments") {
       navigate('/UserPayments', { state: { user: user } })
+    }
 
+    if(choice == "Bills"){
+      navigate('/Bills', { state: { user: user } })
     }
   }
   const handleUserClick = (curruser) => {
