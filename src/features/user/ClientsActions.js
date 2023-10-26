@@ -1,14 +1,39 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetUsers ,searchUsers ,updateSingleUsers ,getUserReadings ,getUserPayments ,updateUserPayment,deleteuserPayment,addNewUsers , GetUser, addUserMeterReading} from "../../services/user/clients.service";
+import { GetUsers ,
+    searchUsers ,
+    updateSingleUsers ,
+    getUserReadings ,
+    getUserPayments ,
+    updateUserPayment,
+    deleteuserPayment,
+    addNewUsers,
+    GetUser, 
+    addUserMeterReading ,
+    updateLatestReading,
+    billLatest} from "../../services/user/clients.service";
 
 export const addNewReading = createAsyncThunk(
     "clients/addNewMeterReading",
     async (data,thunkAPI)=>{
         try {
             
-            const response = addUserMeterReading(data)
+            const response = await addUserMeterReading(data)
 
             return response.data
+
+        } catch (error) {
+            
+        }
+    }
+)
+
+export const updateMeterreading = createAsyncThunk(
+    "clients/UpdateNewMeterReading",
+    async (data,thunkAPI)=>{
+        try {
+            
+            const response = await updateLatestReading(data)
+            return response
 
         } catch (error) {
             
@@ -126,6 +151,21 @@ export const deleteSingleUserPayment = createAsyncThunk(
         try {
             const response = await deleteuserPayment(deleteInfo)
             return response.data;
+        } catch (error) {
+            
+        }
+    }
+)
+
+
+//bills
+
+export const billThisMonth = createAsyncThunk(
+    "client/billLatestMonth",
+    async(bill,thunkAPI)=>{
+        try {
+            const response = await billLatest(bill);
+            return response
         } catch (error) {
             
         }

@@ -19,7 +19,7 @@ export const updateSingleUsers=(update)=>{
     return axios.patch(`${BASE_URL}/api/v1/clients`,update)
 }
 
-export const getUserReadings = (meter_number)=>{
+export const getUserReadings = async (meter_number)=>{
     return axios.get(`${BASE_URL}/api/v1/readings/${meter_number}`)
 }
 
@@ -43,5 +43,19 @@ export const deleteuserPayment = (deletePayment)=>{
 export const addUserMeterReading = (newReading)=>{
 
     return axios.post(`${BASE_URL}/api/v1/readings/`,newReading)
+
+}
+
+export const updateLatestReading = (updatedReading)=>{
+
+    return axios.patch(`${BASE_URL}/api/v1/readings/`,updatedReading)
+
+}
+
+// Billing apis
+
+export const billLatest = (bill)=>{
+
+    return axios.post(`${BASE_URL}/api/v1/bills/`,bill)
 
 }
