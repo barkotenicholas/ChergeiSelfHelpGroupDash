@@ -59,3 +59,9 @@ export const billLatest = (bill)=>{
     return axios.post(`${BASE_URL}/api/v1/bills/`,bill)
 
 }
+
+export const getUserBill = (meter_number)=>{
+
+    return axios.get(`${BASE_URL}/api/v1/bills/${meter_number}`)
+
+}
