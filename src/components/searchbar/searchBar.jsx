@@ -16,9 +16,11 @@ export const SearchBar = ({updateSearch}) =>{
         }
     });
 
-
+    const handleOnChange = (event) => {
+        updateSearch(event.target.value)
+      };
     return (
-        <form className="w-96 px-4 m-2" onSubmit={formik.handleSubmit} >
+        <form className="w-96 px-4 m-2" onChange={handleOnChange} onSubmit={formik.handleSubmit} >
             <div className="relative">
                 <svg
                     type="submit"
