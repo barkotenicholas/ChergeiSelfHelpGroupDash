@@ -30,7 +30,6 @@ const Home = () => {
   const [currentSelectedUser, setcurrentSelectedUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [modalContent, setmodalContent] = useState(null);
-  const [choice, setchoice] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
   
   useEffect(() => {
@@ -46,17 +45,15 @@ const Home = () => {
     }
   }, [loading, currentPage]);
 
-  const PER_PAGE = 10;
-  const offset = currentPage * PER_PAGE;
-
   const pageCount = totalPages;
-  console.log(pageCount);
+
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
   };
+
   function formatDate(date) {
-    const a = new Date(date);
-    return `${a.getFullYear()}-${a.getUTCMonth() + 1}-${a.getDate()}`;
+    const today = new Date(date);
+    return `${today.getFullYear()}-${today.getUTCMonth() + 1}-${today.getDate()}`;
   }
 
   useEffect(() => {
@@ -112,7 +109,6 @@ const Home = () => {
     }
   }
   const handleUserClick = (curruser) => {
-    console.log(curruser);
     setcurrentSelectedUser(() => {
       return curruser;
     });
@@ -177,6 +173,7 @@ const Home = () => {
       ) : (
         <>
           <div className="flex ">
+
             <SearchBar className="p-16" updateSearch={updateSearch}></SearchBar>
 
             <button
@@ -196,37 +193,37 @@ const Home = () => {
                       <tr>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                          className="px-6 py-3 text-sm font-mono text-left text-black"
                         >
                           Name
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                          className="px-6 py-3 text-sm font-mono text-left text-black"
                         >
                           Phone
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                          className="px-6 py-3 text-sm font-mono text-left text-black"
                         >
                           Meter Number
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+                          className="px-6 py-3 text-sm font-mono text-right text-black"
                         >
                           status
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+                          className="px-6 py-3 text-xs font-mono text-right text-black"
                         >
                           Date Connected
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+                          className="px-6 py-3 text-xs font-mono text-right text-black"
                         >
                           Areas
                         </th>
@@ -248,16 +245,16 @@ const Home = () => {
                                   key={i}
                                   onClick={() => handleUserClick(user)}
                                 >
-                                  <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono text-gray-800 whitespace-nowrap">
                                     {user.name}
                                   </td>
-                                  <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono text-gray-800 whitespace-nowrap">
                                     {user.phone_number}
                                   </td>
-                                  <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono text-gray-800 whitespace-nowrap">
                                     {user.meter_number}
                                   </td>
-                                  <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono font-medium text-right whitespace-nowrap">
                                     <a
                                       className="text-green-500 hover:text-green-700"
                                       href="#"
@@ -265,10 +262,10 @@ const Home = () => {
                                       {user.status ? "Active" : "Not active"}
                                     </a>
                                   </td>
-                                  <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono text-right whitespace-nowrap">
                                     {formatDate(user.date_connected)}
                                   </td>
-                                  <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                  <td className="px-6 py-4 text-sm font-mono text-right whitespace-nowrap">
                                     {user.arears}
                                   </td>
                                 </tr>
