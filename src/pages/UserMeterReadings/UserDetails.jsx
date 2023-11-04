@@ -10,7 +10,7 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import { useLocation } from "react-router-dom";
 import { LineWave } from "react-loader-spinner";
 import { IoCaretDown, IoCaretUp } from "react-icons/io5";
-import { FaUserPlus, FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare } from "react-icons/fa";
 import AddNewMeterReading from "../../components/modal/AddNewMeterReading";
 import Modal from "../../components/modal/modal";
 import Swal from "sweetalert2";
@@ -24,7 +24,6 @@ function UserDetails() {
   const [recordData, setrecordData] = useState([]);
   const location = useLocation();
   const [showModalNew, setshowModalNew] = useState(false);
-  const [currentSelectedUser, setcurrentSelectedUser] = useState({});
   const [recorded, setrecorded] = useState(false);
   const [latest_date, setLatest_date] = useState("");
   function updateModal(value) {
@@ -37,39 +36,36 @@ function UserDetails() {
   const myProp = location.state && location.state.user;
   const [users, setUsers] = useState(myProp);
   var latestdates;
+  var recordedlatest ;
   useEffect(() => {
     dispatch(getUsersDetails(users.meter_number))
       .unwrap()
       .then((payload) => {
+        const reversedreading = payload.readings.reverse();
         setrecordData((prev) => {
-          return payload.readings;
+          return reversedreading;
         });
-        console.log("data");
 
-        console.log(recordData);
         if (payload.readings) {
           let latest_date = new Date(
             Math.max(...payload.readings.map((e) => new Date(e.date)))
           );
-          console.log(latest_date);
           if (latest_date) {
             latestdates = latest_date;
             setLatest_date((latest_date) => latest_date);
           }
-          const latest = payload.readings.find((data) => {
-            const thedate = new Date(data.date);
-            const todaydate = new Date();
+        }
+        const latest = payload.readings.find((data) => {
+          const thedate = new Date(data.date);
+          const todaydate = new Date();
 
-            return (
-              thedate.getFullYear() === todaydate.getFullYear() &&
-              thedate.getMonth() === todaydate.getMonth()
-            );
-          });
-          console.log(latest);
-          if (latest) {
-            console.log(latest);
-            setrecorded((prev) => true);
-          }
+          return (
+            thedate.getFullYear() === todaydate.getFullYear() &&
+            thedate.getMonth() === todaydate.getMonth()
+          );
+        });
+        if (latest) {
+          setrecorded(true)
         }
       });
     setLoading(false);
@@ -83,8 +79,7 @@ function UserDetails() {
 
   function handleMeterReadingEdit(newValue, oldValue) {
     setshowModalNew(false);
-    console.log(newValue);
-    console.log(oldValue);
+
 
     if (newValue.new_meter === oldValue) {
       console.log("same value");
@@ -93,7 +88,6 @@ function UserDetails() {
         meter_number: users.meter_number,
         meter_reading: newValue.new_meter,
       };
-      console.log(updateInfo);
       setLoading(true);
 
       dispatch(updateMeterreading(updateInfo))
@@ -105,7 +99,6 @@ function UserDetails() {
         .catch((error) => {
           setLoading(false);
           Swal.fire("Record Updated", `${error}`, "error");
-          console.log(error);
         });
     }
   }
@@ -122,8 +115,7 @@ function UserDetails() {
   }
 
   function bill(row) {
-
-    setLoading(true)
+    setLoading(true);
     const bill = {
       meter_number: users.meter_number,
     };
@@ -191,12 +183,6 @@ function UserDetails() {
           }
         }, // Display "Yes" for true and "No" for false
       },
-      ,
-      {
-        Header: "Actions",
-        accessor: "_id",
-        Cell: ({ value }) => {},
-      },
     ],
     []
   );
@@ -246,20 +232,18 @@ function UserDetails() {
     canNextPage,
     canPreviousPage,
     gotoPage,
-
     pageCount,
     prepareRow,
   } = useTable({ columns, data: data }, useSortBy, usePagination);
 
   const { pageIndex } = state;
-
   return (
     <div>
       {loading ? (
         <LineWave
           height="100"
           width="100"
-          color="#4fa94d"
+          color="#8B5CF6"
           ariaLabel="line-wave"
           wrapperStyle={{}}
           wrapperClass=""
@@ -272,7 +256,7 @@ function UserDetails() {
         <>
           <>
             {recorded ? (
-              <p className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500">
+              <p className="flex items-center gap-3 rounded-md m-2 p-2 text-violet-500 border border-violet-500">
                 This months bill already recorded you can update or delete one
                 of it
               </p>
@@ -280,7 +264,7 @@ function UserDetails() {
               <>
                 <button
                   onClick={handleNewClick}
-                  className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500"
+                  className="flex items-center gap-3 rounded-md m-2 p-2 text-violet-500 border border-violet-500"
                 >
                   Add Meter record
                   <FaPlusSquare />
@@ -301,7 +285,7 @@ function UserDetails() {
                         <tr {...headerGroup.getHeaderGroupProps()}>
                           {headerGroup.headers.map((column) => (
                             <th
-                              className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                              className="px-6 py-3 text-xs font-mono text-left text-black"
                               {...column.getHeaderProps(
                                 column.getSortByToggleProps()
                               )}
@@ -333,7 +317,7 @@ function UserDetails() {
                           <tr {...row.getRowProps()}>
                             {row.cells.map((cell) => (
                               <td
-                                className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"
+                                className="px-6 py-4 text-sm font-mono text-gray-800 whitespace-nowrapss"
                                 {...cell.getCellProps()}
                               >
                                 {cell.render("Cell")}

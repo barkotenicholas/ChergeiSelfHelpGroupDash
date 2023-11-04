@@ -73,7 +73,6 @@ const Home = () => {
       dispatch(searchAllUsers({ search: search, page: currentPage }))
         .unwrap()
         .then((payload) => {
-          console.log(payload.users);
           setUsers(payload.users);
           setTotalPages(payload.totalPages);
           setCurrentPage(payload.currentPage);
