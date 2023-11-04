@@ -4,6 +4,7 @@ import { getSingleUserBill } from "../../features/user/ClientsActions";
 import { LineWave } from "react-loader-spinner";
 import { useTable, usePagination, useSortBy } from 'react-table';
 import { useLocation } from 'react-router-dom';
+import { IoCaretDown, IoCaretUp } from "react-icons/io5";
 
 function UserBills({ user }) {
   const dispatch = useDispatch();
@@ -62,7 +63,6 @@ function UserBills({ user }) {
     canNextPage,
     canPreviousPage,
     gotoPage,
-
     pageCount,
     prepareRow,
   } = useTable({ columns, data: data }, useSortBy, usePagination);
