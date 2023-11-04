@@ -11,13 +11,14 @@ import { useEffect } from 'react';
 function UserPaymentHeader({ users, handleNewClick }) {
 
     const dispatch = useDispatch()
+    
     const [loading, setLoading] = useState(true);
     const [singleusers, setsingleusers] = useState(users)
+
     useEffect(() => {
 
         dispatch(getSingleUser(users._id)).unwrap()
             .then((payload) => {
-                console.log(payload.user[0]);
                 setsingleusers((pre) => payload.user[0])
                 setLoading(false)
             }).catch((e) => {
@@ -34,7 +35,7 @@ function UserPaymentHeader({ users, handleNewClick }) {
                 loading ? <LineWave
                     height="100"
                     width="100"
-                    color="#4fa94d"
+                    color="#8B5CF6"
                     ariaLabel="line-wave"
                     wrapperStyle={{}
                     }
@@ -46,11 +47,11 @@ function UserPaymentHeader({ users, handleNewClick }) {
                 /> :
                     <>
                         <div className='flex'>
-                            <button onClick={handleNewClick} className="flex items-center gap-3 rounded-md m-2 p-2 bg-violet-500">
+                            <button onClick={handleNewClick} className="flex items-center gap-3 rounded-md m-2 p-2 border border-violet-500 text-violet-500">
                                 Add New Payment
                                 <FaPlusSquare />
                             </button>
-                            <button className="flex items-center gap-3 rounded-md m-1 p-1 bg-violet-500">
+                            <button className="flex items-center gap-3 rounded-md m-2 p-2 border border-violet-500 text-violet-500">
                                 {singleusers.name} has {singleusers.arears} in areas
                             </button>
 

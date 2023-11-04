@@ -16,13 +16,11 @@ function UserBills({ user }) {
   const myProp = location.state && location.state.user;
   const [users, setUsers] = useState(myProp);
   const [bills, setBills] = useState([]);
-  console.log(users);
 
   useEffect(() => {
     dispatch(getSingleUserBill(users.meter_number))
       .unwrap()
       .then((payload) => {
-        console.log(payload.data.bills);
         setBills(payload.data.bills);
         setLoading(false);
       });
@@ -100,7 +98,7 @@ function UserBills({ user }) {
                           <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
                               <th
-                                className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase"
+                                className="px-6 py-3 text-xs font-mono text-left text-black"
                                 {...column.getHeaderProps(
                                   column.getSortByToggleProps()
                                 )}
@@ -132,7 +130,7 @@ function UserBills({ user }) {
                             <tr {...row.getRowProps()}>
                               {row.cells.map((cell) => (
                                 <td
-                                  className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap"
+                                  className="px-6 py-4 text-sm font-mono text-gray-800 whitespace-nowrap"
                                   {...cell.getCellProps()}
                                 >
                                   {cell.render("Cell")}
@@ -147,7 +145,7 @@ function UserBills({ user }) {
                 )}
                 <div className="m-5">
                   <div className="inline-flex">
-                    <span className="mr-2">
+                    <span className="mr-2 font-mono">
                       Page{" "}
                       <strong>
                         {pageIndex + 1} of {pageOptions.length}
@@ -158,18 +156,17 @@ function UserBills({ user }) {
                       onClick={() => gotoPage(0)}
                       disabled={!canPreviousPage}
                     >
-                      {"<<"}
                     </button>
                     <button
                       onClick={() => previousPage()}
-                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l font-mono"
                       disabled={!canPreviousPage}
                     >
                       Prev
                     </button>
                     <button
                       onClick={() => nextPage()}
-                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r font-mono"
                       disabled={!canNextPage}
                     >
                       Next
@@ -179,7 +176,6 @@ function UserBills({ user }) {
                       onClick={() => gotoPage(pageCount - 1)}
                       disabled={!canNextPage}
                     >
-                      {">>"}
                     </button>
                   </div>
                 </div>

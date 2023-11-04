@@ -17,17 +17,15 @@ function UsersPayments() {
   const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [recordData, setrecordData] = useState([]);
   const location = useLocation();
-  const [paymentAmount, setPaymentAmount] = useState(0)
   const [showModalNew, setshowModalNew] = useState(false)
   const [modalContent, setmodalContent] = useState(null)
 
   // Access the passed props
   const myProp = location.state && location.state.user;
-  const [users, setUsers] = useState(myProp)
+  const [users, setUsers] = useState(myProp);
+
   useEffect(() => {
 
     dispatch(getUsersPayments(users.meter_number)).unwrap()
