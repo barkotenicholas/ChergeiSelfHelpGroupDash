@@ -11,7 +11,8 @@ import { GetUsers ,
     addUserMeterReading ,
     updateLatestReading,
     billLatest,
-    getUserBill} from "../../services/user/clients.service";
+    getUserBill,
+    getSmsBalance} from "../../services/user/clients.service";
 
 export const addNewReading = createAsyncThunk(
     "clients/addNewMeterReading",
@@ -186,3 +187,16 @@ export const getSingleUserBill = createAsyncThunk(
 )
 
 
+// getSMS balance  
+
+export const getATSmsBalance = createAsyncThunk(
+    "client/getATSmsBalance",
+    async(thunkAPI)=>{
+        try {
+            const response = await getSmsBalance();
+            return response
+        } catch (error) {
+            
+        }
+    }
+)

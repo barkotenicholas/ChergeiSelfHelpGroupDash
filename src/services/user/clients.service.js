@@ -65,3 +65,12 @@ export const getUserBill = (meter_number)=>{
     return axios.get(`${BASE_URL}/api/v1/bills/${meter_number}`)
 
 }
+
+
+// get sms balance api 
+
+export const getSmsBalance = ()=>{
+
+    return axios.get(`${BASE_URL}/api/v1/at/`)
+
+}

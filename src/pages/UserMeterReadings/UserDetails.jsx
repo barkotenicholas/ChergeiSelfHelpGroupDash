@@ -4,6 +4,7 @@ import {
   addNewReading,
   updateMeterreading,
   billThisMonth,
+  getATSmsBalance,
 } from "../../features/user/ClientsActions";
 import { useDispatch } from "react-redux";
 import { useTable, usePagination, useSortBy } from "react-table";
@@ -25,6 +26,7 @@ function UserDetails() {
   const location = useLocation();
   const [showModalNew, setshowModalNew] = useState(false);
   const [recorded, setrecorded] = useState(false);
+  const [smsBalance, setsmsBalance] = useState(null);
   const [latest_date, setLatest_date] = useState("");
   function updateModal(value) {
     setshowModalNew(false);
@@ -36,8 +38,14 @@ function UserDetails() {
   const myProp = location.state && location.state.user;
   const [users, setUsers] = useState(myProp);
   var latestdates;
-  var recordedlatest ;
+  var recordedlatest;
   useEffect(() => {
+    dispatch(getATSmsBalance())
+      .unwrap()
+      .then((payload) => {
+        setsmsBalance(payload.data.data.UserData.balance)
+      });
+
     dispatch(getUsersDetails(users.meter_number))
       .unwrap()
       .then((payload) => {
@@ -65,7 +73,7 @@ function UserDetails() {
           );
         });
         if (latest) {
-          setrecorded(true)
+          setrecorded(true);
         }
       });
     setLoading(false);
@@ -79,7 +87,6 @@ function UserDetails() {
 
   function handleMeterReadingEdit(newValue, oldValue) {
     setshowModalNew(false);
-
 
     if (newValue.new_meter === oldValue) {
       console.log("same value");
@@ -254,6 +261,13 @@ function UserDetails() {
         />
       ) : (
         <>
+          <>
+            <p
+              className="flex items-center gap-3 rounded-md m-2 p-2 text-violet-500 border border-violet-500 "
+            >
+              SMS balance is {smsBalance}
+            </p>
+          </>
           <>
             {recorded ? (
               <p className="flex items-center gap-3 rounded-md m-2 p-2 text-violet-500 border border-violet-500">
