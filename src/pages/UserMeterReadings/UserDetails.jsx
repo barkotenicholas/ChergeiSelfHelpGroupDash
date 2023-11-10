@@ -317,7 +317,6 @@ function UserDetails() {
   } = useTable({ columns, data: data }, useSortBy, usePagination);
 
   const { pageIndex } = state;
-  console.log(recorded);
   return (
     <div>
       {loading ? (
