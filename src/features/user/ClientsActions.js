@@ -3,6 +3,7 @@ import { GetUsers ,
     searchUsers ,
     updateSingleUsers ,
     getUserReadings ,
+    deleteMeter,
     getUserPayments ,
     updateUserPayment,
     deleteuserPayment,
@@ -42,6 +43,21 @@ export const updateMeterreading = createAsyncThunk(
         }
     }
 )
+
+export const DeleteLatestMeterreading = createAsyncThunk(
+    "clients/deleteLatestMeterReading",
+    async (data,thunkAPI)=>{
+        try {
+            
+            const response = await deleteMeter(data)
+            return response.data
+
+        } catch (error) {
+            
+        }
+    }
+)
+
 
 export const getSingleUser = createAsyncThunk(
     "clients/getSingleClients",

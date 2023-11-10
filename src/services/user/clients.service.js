@@ -74,3 +74,11 @@ export const getSmsBalance = ()=>{
     return axios.get(`${BASE_URL}/api/v1/at/`)
 
 }
+
+// Delete MeterNumber
+
+export const deleteMeter=(meterdata)=>{
+    
+    return axios.delete(`${BASE_URL}/api/v1/readings/`,{data:meterdata});
+
+}
