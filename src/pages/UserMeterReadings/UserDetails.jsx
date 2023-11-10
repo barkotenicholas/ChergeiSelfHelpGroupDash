@@ -268,7 +268,6 @@ function UserDetails() {
 
     let sms = Number(smsBalance.split(" ")[1])
     if(sms < 10 ){
-      console.log("low sms balance ");
       Swal.fire("S.M.S balance is low please update it", `please updatesms balance`, "info");
       return
     }
