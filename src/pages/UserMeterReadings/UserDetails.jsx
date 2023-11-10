@@ -266,6 +266,12 @@ function UserDetails() {
   function handleMeterReadingAdd(data) {
     const todayDate = new Date();
 
+    let sms = Number(smsBalance.split(" ")[1])
+    if(sms < 10 ){
+      console.log("low sms balance ");
+      Swal.fire("S.M.S balance is low please update it", `please updatesms balance`, "info");
+      return
+    }
     const addReading = {
       meter_number: users.meter_number,
       meter_reading: data.new_meter,
