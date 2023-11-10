@@ -49,7 +49,6 @@ function UserDetails() {
       .then((payload) => {
         setsmsBalance(payload.data.data.UserData.balance);
       });
-    console.log("Called");
     dispatch(getUsersDetails(users.meter_number))
       .unwrap()
       .then((payload) => {
@@ -59,7 +58,6 @@ function UserDetails() {
         });
 
         if (payload.readings) {
-          console.log(payload.readings.length);
           let latest_date = new Date(
             Math.max(...payload.readings.map((e) => new Date(e.date)))
           );
@@ -87,7 +85,6 @@ function UserDetails() {
         }else{
           setrecorded(false)
         }
-        console.log(recorded);
       });
     setLoading(false);
   }, [loading]);
